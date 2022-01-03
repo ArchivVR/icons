@@ -34,6 +34,5 @@ jobs:
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON_EMOJI: ':rocket:'
         SLACK_MESSAGE: ""
-        SLACK_TITLE: "Push changes into ${GITHUB_REF}"
-        SLACK_USERNAME: "${GITHUB_ACTOR}"
+        SLACK_TITLE:  ${{ "Push changes into " + github.ref }}
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
