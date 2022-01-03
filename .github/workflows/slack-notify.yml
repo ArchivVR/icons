@@ -25,6 +25,8 @@ jobs:
     if: ${{ github.head_ref == '' }}
     name: Slack Notification Push
     runs-on: ubuntu-latest
+    env:
+      ref: ${{ github.ref }}
     steps:
     - uses: actions/checkout@v2
     - name: Slack Notification
@@ -34,5 +36,5 @@ jobs:
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON_EMOJI: ':rocket:'
         SLACK_MESSAGE: ""
-        SLACK_TITLE:  ${{ 'Push changes into ' + github.ref }}
+        SLACK_TITLE: "Push changes into $ref"
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
