@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - main
+      - develop
+    name: Slack Notification
+    jobs:
+      slackNotificationMerge:
+        if: ${{ github.head_ref != '' }}
+        name: Slack Notification
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Slack Notification
+          uses: rtCamp/action-slack-notify@v2
+          env:
+            SLACK_CHANNEL: tracking_deployments
+            SLACK_COLOR: ${{ job.status }}
+            SLACK_ICON_EMOJI: ':rocket:'
+            SLACK_MESSAGE: "source: $GITHUB_HEAD_REF"
+            SLACK_TITLE: 'Merged changes into $GITHUB_REF'
+            SLACK_USERNAME: "$GITHUB_ACTOR"
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      slackNotificationPush:
+        if: ${{ github.head_ref == '' }}
+        name: Slack Notification
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Slack Notification
+          uses: rtCamp/action-slack-notify@v2
+          env:
+            SLACK_CHANNEL: tracking_deployments
+            SLACK_COLOR: ${{ job.status }}
+            SLACK_ICON_EMOJI: ':rocket:'
+            SLACK_MESSAGE: ""
+            SLACK_TITLE: 'Push changes into $GITHUB_REF'
+            SLACK_USERNAME: "$GITHUB_ACTOR"
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
