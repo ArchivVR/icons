@@ -7,7 +7,7 @@ on:
     jobs:
       slackNotificationMerge:
         if: ${{ github.head_ref != '' }}
-        name: Slack Notification
+        name: Slack Notification Merge
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
@@ -23,7 +23,7 @@ on:
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       slackNotificationPush:
         if: ${{ github.head_ref == '' }}
-        name: Slack Notification
+        name: Slack Notification Push
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
