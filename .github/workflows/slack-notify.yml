@@ -17,10 +17,11 @@ jobs:
         SLACK_CHANNEL: tracking_deployments
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON_EMOJI: ':rocket:'
-        SLACK_MESSAGE: "source: ${GITHUB_HEAD_REF}"
-        SLACK_TITLE: "Merged changes into ${GITHUB_REF}"
+        SLACK_TITLE: "Merged ${{ github.head_ref }} into ${{ github.ref_name }}"
         SLACK_USERNAME: "${$GITHUB_ACTOR}"
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_FOOTER: "______"
+        MSG_MINIMAL: ref,commit
   slackNotificationPush:
     if: ${{ github.head_ref == '' }}
     name: Slack Notification Push
@@ -33,6 +34,7 @@ jobs:
         SLACK_CHANNEL: tracking_deployments
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON_EMOJI: ':rocket:'
-        SLACK_MESSAGE: ""
-        SLACK_TITLE: "Push changes into ${{ github.ref }}"
+        SLACK_TITLE: "Push changes into ${{ github.ref_name }}"
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_FOOTER: "______"
+        MSG_MINIMAL: ref,commit
